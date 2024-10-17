@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+  email         String   @unique
+  password      String
+  location      String
+  skillLevel    String   @db.VarChar(50)
+  profilePhoto  String?  // Optional field
+  orders        Order[]
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(255)
+  description String?  // Text can be nullable
+  price       Int
+  image       String?
+  inventory   Int
+  rating      Int?
+  reviews     String[] // Array of strings
+  promotions  String?
+  discount    Int?
+}
+
+model Order {
+  id            Int      @id @default(autoincrement())
+  orderDate     DateTime @default(now())
+  totalAmount   Int
+  shippingAddress String
+  user          User?     @relation(fields: [userId], references: [id])
+  userId        Int?
+  court         Court?    @relation(fields: [courtId], references: [id])
+  courtId       Int?
+}
+
+model Court {
+  id           Int      @id @default(autoincrement())
+  name         String   @db.VarChar(255)
+  location     String   @db.VarChar(255)
+  surface      String   @db.VarChar(50)
+  membershipPrice Int
+  orders       Order[]
+}
+
+model Club {
+  id              Int      @id @default(autoincrement())
+  name            String   @db.VarChar(255)
+  address         String
+  contactInfo     String   @db.VarChar(255)
+  membershipPrice Int
+  events          Event[]
+}
+
+model Event {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(255)
+  date      DateTime
+  time      DateTime
+  location  String   @db.VarChar(255)
+  club      Club     @relation(fields: [clubId], references: [id])
+  clubId    Int
+  price     Int
+}
+
+model Community {
+  id            Int      @id @default(autoincrement())
+  registration  Int
+  userIds       Int[]    // Reference to user IDs array
+}
+
+model Admistration {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+  email         String   @unique
+  password      String
+}
+
+

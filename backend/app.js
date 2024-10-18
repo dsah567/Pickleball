@@ -20,13 +20,14 @@ app.use(express.urlencoded({extended: true, limit: "16kb"}))
 app.use(cookieParser())
 
 //importing routes
-// import teacherRouter from "";
+import userRoutes from './routes/userRoutes.js';
 
 app.get("/",(req, res) => {
     res.send('hello world')
   })
 
 //route decleare
-// app.use(" ",)
+app.use('/uploads', express.static('uploads'));  
+app.use('/api/v1/user', userRoutes);
 
 export {app}

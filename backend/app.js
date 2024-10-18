@@ -21,6 +21,7 @@ app.use(cookieParser())
 
 //importing routes
 import userRoutes from './routes/userRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 
 app.get("/",(req, res) => {
     res.send('hello world')
@@ -29,5 +30,6 @@ app.get("/",(req, res) => {
 //route decleare
 app.use('/uploads', express.static('uploads'));  
 app.use('/api/v1/user', userRoutes);
+app.use('/api/v1/admin', adminRoutes);
 
 export {app}

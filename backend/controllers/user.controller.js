@@ -35,8 +35,6 @@ export const signup = async (req, res) => {
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 12);
-console.log(hashedPassword);
-    console.log( name,email,password,location,skillLevel, uploadedResponse?.secure_url || null ,);
 
     // Create new user
     const newUser = await prisma.user.create({
@@ -73,7 +71,7 @@ export const signin = async (req, res) => {
     const token = jwt.sign({ userId: user }, process.env.JWT_SECRET, { expiresIn: '24h' });
 
     // Send token in cookies
-    res.cookie('token', token, {
+    res.cookie('token', {token,user}, {
       httpOnly: true,
       secure: true, 
       sameSite: 'none',

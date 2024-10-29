@@ -22,6 +22,10 @@ app.use(cookieParser())
 //importing routes
 import userRoutes from './routes/userRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import clubRouter from "./routes/clubRoutes.js";
+import eventRouter from "./routes/eventRoutes.js";
+import productRouter from "./routes/productRoutes.js";
+import orderRouter from "./routes/orderRoutes.js";
 
 app.get("/",(req, res) => {
     res.send('hello world')
@@ -31,5 +35,9 @@ app.get("/",(req, res) => {
 app.use('/uploads', express.static('uploads'));  
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/admin', adminRoutes);
+app.use('/api/v1/club', clubRouter);
+app.use('/api/v1/event', eventRouter);
+app.use('/api/v1/product', productRouter);
+app.use('/api/v1/order', orderRouter);
 
 export {app}

@@ -60,6 +60,8 @@ model Court {
 model Club {
   id              Int      @id @default(autoincrement())
   name            String   @db.VarChar(255)
+  email         String   @unique
+  password      String
   address         String
   contactInfo     String   @db.VarChar(255)
   membershipPrice Int
